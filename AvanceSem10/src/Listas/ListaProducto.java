@@ -52,30 +52,28 @@ import Clases.Producto;
     }
 
     // Método para buscar un producto por su ID
-    public Producto buscarPorId(String id) {
-        NodoProducto nodoActual = inicio;
-        while (nodoActual != null) {
-            if (nodoActual.getProducto().getIdProducto().equals(id)) {
-                return nodoActual.getProducto(); // Se encontró el producto
-            }
-            nodoActual = nodoActual.getSiguiente();
-        }
+    public Producto buscarPorId(NodoProducto nodoActual, String id) {
+    if (nodoActual == null) {
         return null; // Producto no encontrado
+    } else if (nodoActual.getProducto().getIdProducto().equals(id)) {
+        return nodoActual.getProducto(); // Se encontró el producto
+    } else {
+        return buscarPorId(nodoActual.getSiguiente(), id);
     }
+}
 
     // Método para imprimir la lista de productos
-    public void imprimir() {
-        NodoProducto nodoActual = inicio;
-        while (nodoActual != null) {
+    public void imprimir(NodoProducto nodoActual) {
+        if (nodoActual != null) {
             Producto producto = nodoActual.getProducto();
             System.out.println("ID: " + producto.getIdProducto() +
-                               ", Tipo: " + producto.getTipo() +
-                               ", Modelo: " + producto.getModelo() +
-                               ", Marca: " + producto.getMarca() +
-                               ", Descripción: " + producto.getDescripcion() +
-                               ", Precio: " + producto.getPrecio() +
-                               ", Stock: " + producto.getStock());
-            nodoActual = nodoActual.getSiguiente();
+                           ", Tipo: " + producto.getTipo() +
+                           ", Modelo: " + producto.getModelo() +
+                           ", Marca: " + producto.getMarca() +
+                           ", Descripción: " + producto.getDescripcion() +
+                           ", Precio: " + producto.getPrecio() +
+                           ", Stock: " + producto.getStock());
+            imprimir(nodoActual.getSiguiente());
         }
     }
 }
